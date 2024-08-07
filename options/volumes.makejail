@@ -1,0 +1,2 @@
+OPTION volume=navidrome-music mountpoint:/usr/local/share/navidrome/music
+OPTION volume=navidrome-db mountpoint:/var/db/navidrome owner:80 group:80
