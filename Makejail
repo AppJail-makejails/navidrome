@@ -1,0 +1,36 @@
+INCLUDE options/options.makejail
+
+ARG navidrome_tag=13.3
+
+FROM --entrypoint gh+AppJail-makejails/navidrome navidrome:${navidrome_tag}
+
+STOP
+
+STAGE start
+
+USER navidrome
+WORKDIR /var/db/navidrome
+
+ENV ND_ADDRESS=0.0.0.0
+
+RUN daemon \
+        -r \
+        -t "Modern Music Server and Streamer compatible with Subsonic/Airsonic" \
+        -P /var/run/navidrome.master.pid \
+        -p /var/run/navidrome.pid \
+        -o /var/log/navidrome.log \
+            navidrome \
+	    	--configfile /usr/local/etc/navidrome/config.toml \
+		--datafolder /var/db/navidrome
+
+STAGE custom:navidrome_status
+
+CMD if [ -f "/app/.pid" ]; then \
+        top -ap `head -1 /app/.pid`; \
+    fi
+
+STAGE custom:navidrome_log
+
+CMD if [ -f "/app/navidrome.log" ]; then \
+        less -R /app/navidrome.log; \
+    fi

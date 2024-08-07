@@ -1,0 +1,16 @@
+tags: 13.3
+13.3.arch: amd64
+13.3.name: "navidrome"
+13.3.timestamp.amd64: 1723038545
+13.3.sum.amd64: 22d6d97701329743540204b859aaa964e162c92a8f62715f84eee2a2238cf007
+13.3.size.amd64: 176285062
+13.3.source.amd64: "http://appjail.hpc.at/navidrome/13.3-amd64-image.appjail"
+13.3.source.amd64+: "https://images.all101bsd.download/navidrome/13.3-amd64-image.appjail"
+tags+: 14.1
+14.1.arch: amd64
+14.1.name: "navidrome"
+14.1.timestamp.amd64: 1723038802
+14.1.sum.amd64: 3c14d0d7340fa1da18d072eaeadf1f82e1630cf689ba752cfa76050c2fc37f4d
+14.1.size.amd64: 175497400
+14.1.source.amd64: "http://appjail.hpc.at/navidrome/14.1-amd64-image.appjail"
+14.1.source.amd64+: "https://images.all101bsd.download/navidrome/14.1-amd64-image.appjail"
