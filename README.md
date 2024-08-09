@@ -63,7 +63,7 @@ DIRECTOR_PROJECT=navidrome
 
 ### Check current status
 
-The custom stage `navidrome_status` can be used to run `top(1)` to check the status of MeTube.
+The custom stage `navidrome_status` can be used to run `top(1)` to check the status of Navidrome.
 
 ```sh
 appjail run -s navidrome_status navidrome
