@@ -25,12 +25,12 @@ RUN daemon \
 
 STAGE custom:navidrome_status
 
-CMD if [ -f "/app/.pid" ]; then \
-        top -ap `head -1 /app/.pid`; \
+CMD if [ -f "/var/run/navidrome.pid" ]; then \
+        top -ap `head -1 /var/run/navidrome.pid`; \
     fi
 
 STAGE custom:navidrome_log
 
-CMD if [ -f "/app/navidrome.log" ]; then \
-        less -R /app/navidrome.log; \
+CMD if [ -f "/var/log/navidrome.log" ]; then \
+        less -R /var/log/navidrome.log; \
     fi
