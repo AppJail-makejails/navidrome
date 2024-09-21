@@ -1,6 +1,6 @@
 INCLUDE options/options.makejail
 
-ARG navidrome_tag=13.3
+ARG navidrome_tag=13.4
 
 FROM --entrypoint gh+AppJail-makejails/navidrome navidrome:${navidrome_tag}
 
