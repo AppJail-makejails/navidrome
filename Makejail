@@ -13,10 +13,8 @@ WORKDIR /var/db/navidrome
 ENV ND_ADDRESS=0.0.0.0
 
 RUN daemon \
-        -r \
 	-u www \
         -t "Modern Music Server and Streamer compatible with Subsonic/Airsonic" \
-        -P /var/run/navidrome.master.pid \
         -p /var/run/navidrome.pid \
         -o /var/log/navidrome.log \
             navidrome \
