@@ -1,16 +1,17 @@
 tags+: 13.4
 13.4.arch: amd64
 13.4.name: "navidrome"
-13.4.timestamp.amd64: 1733894165
-13.4.sum.amd64: 8728cb341fd95fc78c499471968e9e2cf3892645d5a95165f812c23e32ab7b61
-13.4.size.amd64: 180470464
+13.4.timestamp.amd64: 1734415087
+13.4.sum.amd64: 040bfcae4429861454bf3cd8a30349fe7bbc83602da1a9236f5b49e19bb56d7e
+13.4.size.amd64: 180428029
 13.4.source.amd64: "http://appjail.hpc.at/navidrome/13.4-amd64-image.appjail"
 13.4.source.amd64+: "https://images.all101bsd.download/navidrome/13.4-amd64-image.appjail"
 tags+: 14.2
 14.2.arch: amd64
 14.2.name: "navidrome"
-14.2.timestamp.amd64: 1733894304
-14.2.sum.amd64: 49e66eb901cea3455096ba8060b6b7b388dda05b49885d1530236173d642048c
-14.2.size.amd64: 180783325
+14.2.timestamp.amd64: 1734415208
+14.2.sum.amd64: f7d35808bbea41c2acba86846b41bd858d86247f579558533273223abfb5cf3f
+14.2.size.amd64: 180972273
 14.2.source.amd64: "http://appjail.hpc.at/navidrome/14.2-amd64-image.appjail"
 14.2.source.amd64+: "https://images.all101bsd.download/navidrome/14.2-amd64-image.appjail"
+maintenance: "This image is uploading, please wait a moment and try again. If you are importing this image using a Makejail that has the '--<name>_ajspec' argument, you can use the 'reproduce' method to use 'appjail-reproduce'. See 'appjail-image(5)' for details."
