@@ -41,6 +41,7 @@ services:
     makejail: gh+AppJail-makejails/navidrome
     options:
       - expose: 4533
+      - container: 'args:--pull'
     oci:
       environment:
         - ND_SCANSCHEDULE: 1h
