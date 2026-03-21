@@ -39,6 +39,9 @@ services:
   navidrome:
     name: navidrome
     makejail: gh+AppJail-makejails/navidrome
+    arguments:
+      - puid: 1000
+      - pgid: 1000
     options:
       - expose: 4533
       - container: 'args:--pull'
