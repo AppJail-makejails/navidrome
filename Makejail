@@ -12,8 +12,10 @@ INCLUDE gh+AppJail-makejails/user-mapping
 CMD --local appjail oci set-user "${APPJAIL_JAILNAME}" noroot
 CMD --local appjail oci set-boot on "${APPJAIL_JAILNAME}"
 CMD chown noroot:noroot /usr/local/share/navidrome/music /var/db/navidrome
-CMD find /usr/local/share/navidrome/music -user www -exec chown -h noroot {} +
-CMD find /var/db/navidrome -group www -exec chown -h :noroot {} +
+CMD for path in /usr/local/share/navidrome/music /var/db/navidrome; do \
+        find "${path}" -user www -exec chown -h noroot {} +; \
+        find "${path}" -group www -exec chown -h :noroot {} +; \
+    done
 
 # The first run won't start the OCI process because we used the 'start'
 # option, so a second run is required for this to happen. For Director
