@@ -1,35 +1,21 @@
-INCLUDE options/options.makejail
+ARG navidrome_from=ghcr.io/appjail-makejails/navidrome
+ARG navidrome_tag=latest
 
-ARG navidrome_tag=14.3
-ARG navidrome_ajspec=gh+AppJail-makejails/navidrome
+OPTION start
+OPTION overwrite=force
+OPTION from=${navidrome_from}:${navidrome_tag}
+OPTION volume=navidrome-music mountpoint:/usr/local/share/navidrome/music owner:${puid} group:${pgid}
+OPTION volume=navidrome-db mountpoint:/var/db/navidrome owner:${puid} group:${pgid}
 
-FROM --entrypoint "${navidrome_ajspec}" navidrome:${navidrome_tag}
+INCLUDE gh+AppJail-makejails/user-mapping
 
+CMD --local appjail oci set-user "${APPJAIL_JAILNAME}" noroot
+CMD --local appjail oci set-boot on "${APPJAIL_JAILNAME}"
+CMD chown noroot:noroot /usr/local/share/navidrome/music /var/db/navidrome
+CMD find /usr/local/share/navidrome/music -user www -exec chown -h noroot {} +
+CMD find /var/db/navidrome -group www -exec chown -h :noroot {} +
+
+# The first run won't start the OCI process because we used the 'start'
+# option, so a second run is required for this to happen. For Director
+# users, this goes virtually unnoticed.
 STOP
-
-STAGE start
-
-WORKDIR /var/db/navidrome
-
-ENV ND_ADDRESS=0.0.0.0
-
-RUN daemon \
-	-u www \
-        -t "Modern Music Server and Streamer compatible with Subsonic/Airsonic" \
-        -p /var/run/navidrome.pid \
-        -o /var/log/navidrome.log \
-            navidrome \
-	    	--configfile /usr/local/etc/navidrome/config.toml \
-		--datafolder /var/db/navidrome
-
-STAGE custom:navidrome_status
-
-CMD if [ -f "/var/run/navidrome.pid" ]; then \
-        top -ap `head -1 /var/run/navidrome.pid`; \
-    fi
-
-STAGE custom:navidrome_log
-
-CMD if [ -f "/var/log/navidrome.log" ]; then \
-        less -R /var/log/navidrome.log; \
-    fi
