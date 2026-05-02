@@ -9,12 +9,19 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for the build'
+        required: false
+        type: string
+        default: 'Manual dispatch'
 
 jobs:
   build:
     uses: appjail-makejails/workflows/.github/workflows/daemonless-build.yaml@main
     with:
       image_name: %%IMAGE_NAME%%
+      reason: ${{ inputs.reason || 'No description provided' }}
     secrets: inherit
   workflow-keepalive:
     if: github.event_name == 'schedule'
