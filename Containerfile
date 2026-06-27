@@ -21,7 +21,7 @@ ENV ND_DATAFOLDER=/var/db/navidrome
 ENV ND_CONFIGFILE=/usr/local/etc/navidrome/config.toml
 ENV ND_PORT=4533
 ENV ND_ADDRESS=0.0.0.0
-RUN touch /.nddockerenv
+RUN echo -n > /.nddockerenv
 
 EXPOSE ${ND_PORT}
 
