@@ -89,3 +89,4 @@ build:
 ## Notes
 
 1. This Makejail includes [gh+AppJail-makejails/user-mapping](https://github.com/AppJail-makejails/user-mapping).
+2. `navidrome-music` volume remains unchanged, allowing for read-only mounts.
