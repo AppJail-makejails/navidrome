@@ -4,7 +4,7 @@ Navidrome allows you to enjoy your music collection from anywhere, by making it 
 
 www.navidrome.org
 
-<img src="https://github.com/navidrome/navidrome/blob/master/ui/public/android-chrome-192x192.png?raw=true" alt="navidrome logo" width="30%" height="auto">
+<img src="https://github.com/navidrome/navidrome/blob/master/ui/public/android-chrome-192x192.png?raw=true" width="30%" height="auto" alt="Navidrome logo">
 
 ## How to use this Makejail
 
@@ -61,29 +61,29 @@ volumes:
     device: /var/appjail-volumes/navidrome/music
 ```
 
-### Arguments
+### Arguments (stage: build)
 
 * `navidrome_from` (default: `ghcr.io/appjail-makejails/navidrome`): Location of OCI image. See also [OCI Configuration](#oci-configuration).
 * `navidrome_tag` (default: `latest`): OCI image tag. See also [OCI Configuration](#oci-configuration).
 
 ### Volumes
 
-| Name            | Owner     | Group     | Perm | Type | Mountpoint                       |
-| --------------- | --------- | --------- | ---- | ---- | -------------------------------- |
-| navidrome-music | `${puid}` | `${pgid}` |  -   |  -   | /usr/local/share/navidrome/music |
-| navidrome-db    | `${puid}` | `${pgid}` |  -   |  -   | /var/db/navidrome                |
+| Name | Owner | Group | Perm | Type | Mountpoint |
+| --- | --- | --- | --- | --- | --- |
+| navidrome-db | `${puid}` | `${pgid}` | - | - | /var/db/navidrome |
+| navidrome-music | `${puid}` | `${pgid}` | - | - | /usr/local/share/navidrome/music |
 
 ## OCI Configuration
 
 ```yaml
 build:
   variants:
-    - tag: 15.0
-      containerfile: Containerfile.pkg
+    - tag: 15.1
+      containerfile: Containerfile
       aliases: ["latest"]
       default: true
       args:
-        FREEBSD_RELEASE: "15.0"
+        FREEBSD_RELEASE: "15.1"
 ```
 
 ## Notes
