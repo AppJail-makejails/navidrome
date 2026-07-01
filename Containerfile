@@ -11,7 +11,6 @@ LABEL org.opencontainers.image.title="Navidrome" \
 
 RUN pkg update && \
     pkg install -y navidrome && \
-    install -d -m 755 /usr/local/sbin && \
     pkg clean -a && \
     rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
 
