@@ -78,8 +78,8 @@ volumes:
 
 | Name | Owner | Group | Perm | Type | Mountpoint |
 | --- | --- | --- | --- | --- | --- |
-| appjail-35c41a0f89-var_db_navidrome | `${puid}` | `${pgid}` | - | - | /var/db/navidrome |
-| appjail-9d753dbd0d-usr_local_share_navidrome_music | `${puid}` | `${pgid}` | - | - | /usr/local/share/navidrome/music |
+| appjail-263aca83a3-data | `${puid}` | `${pgid}` | - | - | /data |
+| appjail-3e431e873f-music | `${puid}` | `${pgid}` | - | - | /music |
 
 ## OCI Configuration
 
