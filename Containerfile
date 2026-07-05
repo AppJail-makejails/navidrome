@@ -16,7 +16,7 @@ RUN set -xe; \
     pkg update; \
     pkg install -U navidrome ffmpeg-nox11; \
     \
-    if [ -z "${NO_PKGCLEAN}" ]; then
+    if [ -z "${NO_PKGCLEAN}" ]; then \
         pkg clean -a; \
         rm -rf /var/cache/pkg/* /var/db/pkg/repos/*; \
     fi
