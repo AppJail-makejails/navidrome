@@ -92,6 +92,8 @@ build:
       default: true
       args:
         FREEBSD_RELEASE: "15.1"
+        NO_PKGCLEAN: "1"
+      cache_dirs: ["pkgcache0:/var/cache/pkg"]
 ```
 
 ## Notes
@@ -100,4 +102,4 @@ build:
 2. If you want to use a configuration file with Navidrome running in AppJail, you can create a `config.toml` config file in the `/data`.
 3. [Configuration options](https://www.navidrome.org/docs/usage/configuration/options/) can be customized with environment variables as needed. For `appjail-director` just add them to the `services.{service}.oci.environment` section. For `appjail oci run` use the `-e` parameter. Ex: `-e ND_SESSIONTIMEOUT=24h`.
 4. Remember to change the volumes paths to point to your local paths. `/data` is where Navidrome will store its DB and cache, `/music` is where your music files are stored. For [multi-library setups](https://www.navidrome.org/docs/usage/features/multi-library/), you may need to mount additional volumes for each library.
-5. This image already drops privileges and runs as a custom user named `noroot`, whose `UID` and `GID` are specified by the `PUID` or `PGID` environment variables, both of which have a default value of `1000`.
+5. This image already drops privileges and runs the process as a custom user named `noroot`, whose `UID` and `GID` are specified by the `PUID` or `PGID` environment variables, both of which have a default value of `1000`.

@@ -2,6 +2,8 @@ ARG FREEBSD_RELEASE
 
 FROM ghcr.io/appjail-makejails/core:${FREEBSD_RELEASE}
 
+ARG NO_PKGCLEAN
+
 LABEL org.opencontainers.image.title="Navidrome" \
     org.opencontainers.image.description="Modern Music Server and Streamer compatible with Subsonic/Airsonic" \
     org.opencontainers.image.source="https://github.com/AppJail-makejails/navidrome" \
@@ -9,10 +11,15 @@ LABEL org.opencontainers.image.title="Navidrome" \
     org.opencontainers.image.vendor="DtxdF" \
     org.opencontainers.image.authors="Jesús Daniel Colmenares Oviedo <dtxdf@disroot.org>"
 
-RUN pkg update && \
-    pkg install -y navidrome ffmpeg-nox11 && \
-    pkg clean -a && \
-    rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+RUN set -xe; \
+    \
+    pkg update; \
+    pkg install -U navidrome ffmpeg-nox11; \
+    \
+    if [ -z "${NO_PKGCLEAN}" ]; then
+        pkg clean -a; \
+        rm -rf /var/cache/pkg/* /var/db/pkg/repos/*; \
+    fi
 
 VOLUME ["/data", "/music"]
 ENV ND_MUSICFOLDER=/music
