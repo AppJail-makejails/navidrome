@@ -1,6 +1,6 @@
 ARG FREEBSD_RELEASE
 
-FROM ghcr.io/appjail-makejails/base:${FREEBSD_RELEASE}
+FROM ghcr.io/appjail-makejails/core:${FREEBSD_RELEASE}
 
 LABEL org.opencontainers.image.title="Navidrome" \
     org.opencontainers.image.description="Modern Music Server and Streamer compatible with Subsonic/Airsonic" \
@@ -10,18 +10,25 @@ LABEL org.opencontainers.image.title="Navidrome" \
     org.opencontainers.image.authors="Jesús Daniel Colmenares Oviedo <dtxdf@disroot.org>"
 
 RUN pkg update && \
-    pkg install -y navidrome && \
+    pkg install -y navidrome ffmpeg-nox11 && \
     pkg clean -a && \
     rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
 
-VOLUME ["/var/db/navidrome", "/usr/local/share/navidrome/music"]
-ENV ND_MUSICFOLDER=/usr/local/share/navidrome/music
-ENV ND_DATAFOLDER=/var/db/navidrome
-ENV ND_CONFIGFILE=/usr/local/etc/navidrome/config.toml
+VOLUME ["/data", "/music"]
+ENV ND_MUSICFOLDER=/music
+ENV ND_DATAFOLDER=/data
+ENV ND_CONFIGFILE=/data/config.toml
 ENV ND_PORT=4533
 ENV ND_ADDRESS=0.0.0.0
+ENV ND_FFMPEGPATH=/usr/local/bin/ffmpeg
 RUN echo -n > /.nddockerenv
 
 EXPOSE ${ND_PORT}
 
-ENTRYPOINT ["navidrome"]
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh && \
+    mkdir -p /data /music && \
+    chmod 755 /data /music 
+
+ENTRYPOINT ["/entrypoint.sh"]

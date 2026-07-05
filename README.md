@@ -10,15 +10,23 @@ www.navidrome.org
 
 ### Standalone
 
-```
-appjail makejail \
-    -j navidrome \
-    -f gh+AppJail-makejails/navidrome \
+```console
+$ mkdir -p /var/appjail-volumes/navidrome/data \
+    /var/appjail-volumes/navidrome/music
+$ appjail oci run -Pd \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -e ND_SCANSCHEDULE="1h" \
+    -e ND_LOGLEVEL="info" \
+    -e ND_SESSIONTIMEOUT="24h" \
+    -o overwrite=force \
     -o virtualnet=":<random> default" \
     -o nat \
-    -o expose="4533" \
-    -o container="args:--pull"
-appjail start navidrome
+    -o expose=4533 \
+    -o container="args:--pull" \
+    -o fstab="/var/appjail-volumes/navidrome/data /data" \
+    -o fstab="/var/appjail-volumes/navidrome/music /music nullfs ro" \
+    ghcr.io/appjail-makejails/navidrome navidrome
 ```
 
 ### Deploy using appjail-director
@@ -39,26 +47,25 @@ services:
   navidrome:
     name: navidrome
     makejail: gh+AppJail-makejails/navidrome
-    arguments:
-      - puid: 1000
-      - pgid: 1000
     options:
       - expose: 4533
-      - container: 'args:--pull'
+      - container: 'boot args:--pull'
     oci:
       environment:
         - ND_SCANSCHEDULE: 1h
         - ND_LOGLEVEL: info
         - ND_SESSIONTIMEOUT: 24h
+        - PUID: 1000
+        - PGID: 1000
     volumes:
-      - nd_db: navidrome-db
-      - nd_music: navidrome-music
-default_volume_type: '<volumefs>'
+      - nd_data: /data
+      - nd_music: /music
 volumes:
-  nd_db:
-    device: /var/appjail-volumes/navidrome/db
+  nd_data:
+    device: /var/appjail-volumes/navidrome/data
   nd_music:
     device: /var/appjail-volumes/navidrome/music
+    options: ro
 ```
 
 ### Arguments (stage: build)
@@ -66,12 +73,13 @@ volumes:
 * `navidrome_from` (default: `ghcr.io/appjail-makejails/navidrome`): Location of OCI image. See also [OCI Configuration](#oci-configuration).
 * `navidrome_tag` (default: `latest`): OCI image tag. See also [OCI Configuration](#oci-configuration).
 
+
 ### Volumes
 
 | Name | Owner | Group | Perm | Type | Mountpoint |
 | --- | --- | --- | --- | --- | --- |
-| navidrome-db | `${puid}` | `${pgid}` | - | - | /var/db/navidrome |
-| navidrome-music | `${puid}` | `${pgid}` | - | - | /usr/local/share/navidrome/music |
+| appjail-35c41a0f89-var_db_navidrome | `${puid}` | `${pgid}` | - | - | /var/db/navidrome |
+| appjail-9d753dbd0d-usr_local_share_navidrome_music | `${puid}` | `${pgid}` | - | - | /usr/local/share/navidrome/music |
 
 ## OCI Configuration
 
@@ -88,5 +96,4 @@ build:
 
 ## Notes
 
-1. This Makejail includes [gh+AppJail-makejails/user-mapping](https://github.com/AppJail-makejails/user-mapping).
-2. `navidrome-music` volume remains unchanged, allowing for read-only mounts.
+1. `navidrome-music` volume remains unchanged, allowing for read-only mounts.

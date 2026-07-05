@@ -1,19 +1,5 @@
 ARG navidrome_from=ghcr.io/appjail-makejails/navidrome
 ARG navidrome_tag=latest
 
-OPTION start
 OPTION overwrite=force
 OPTION from=${navidrome_from}:${navidrome_tag}
-OPTION volume=navidrome-music mountpoint:/usr/local/share/navidrome/music owner:${puid} group:${pgid}
-OPTION volume=navidrome-db mountpoint:/var/db/navidrome owner:${puid} group:${pgid}
-
-INCLUDE gh+AppJail-makejails/user-mapping
-
-CMD --local appjail oci set-user "${APPJAIL_JAILNAME}" noroot
-CMD --local appjail oci set-boot on "${APPJAIL_JAILNAME}"
-CMD chown -R noroot:noroot /var/db/navidrome
-
-# The first run won't start the OCI process because we used the 'start'
-# option, so a second run is required for this to happen. For Director
-# users, this goes virtually unnoticed.
-STOP
