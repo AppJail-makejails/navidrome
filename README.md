@@ -73,13 +73,17 @@ volumes:
 * `navidrome_from` (default: `ghcr.io/appjail-makejails/navidrome`): Location of OCI image. See also [OCI Configuration](#oci-configuration).
 * `navidrome_tag` (default: `latest`): OCI image tag. See also [OCI Configuration](#oci-configuration).
 
+### Environment (OCI image)
+
+* `PGID` (default: `1000`): Equivalent to `PUID` but for the Process Group ID.
+* `PUID` (default: `1000`): Process User ID for the container's main process, allowing you to match the owner of files written to mounted host volumes to your host system's user. Writable volumes are changed based on this environment variable.
 
 ### Volumes
 
 | Name | Owner | Group | Perm | Type | Mountpoint |
 | --- | --- | --- | --- | --- | --- |
-| appjail-263aca83a3-data | `${puid}` | `${pgid}` | - | - | /data |
-| appjail-3e431e873f-music | `${puid}` | `${pgid}` | - | - | /music |
+| appjail-263aca83a3-data | `${PUID}` | `${PGID}` | - | - | /data |
+| appjail-3e431e873f-music | `${PUID}` | `${PGID}` | - | - | /music |
 
 ## OCI Configuration
 
@@ -102,4 +106,3 @@ build:
 2. If you want to use a configuration file with Navidrome running in AppJail, you can create a `config.toml` config file in the `/data`.
 3. [Configuration options](https://www.navidrome.org/docs/usage/configuration/options/) can be customized with environment variables as needed. For `appjail-director` just add them to the `services.{service}.oci.environment` section. For `appjail oci run` use the `-e` parameter. Ex: `-e ND_SESSIONTIMEOUT=24h`.
 4. Remember to change the volumes paths to point to your local paths. `/data` is where Navidrome will store its DB and cache, `/music` is where your music files are stored. For [multi-library setups](https://www.navidrome.org/docs/usage/features/multi-library/), you may need to mount additional volumes for each library.
-5. This image already drops privileges and runs the process as a custom user named `noroot`, whose `UID` and `GID` are specified by the `PUID` or `PGID` environment variables, both of which have a default value of `1000`.
