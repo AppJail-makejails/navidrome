@@ -1,5 +1,6 @@
 ARG navidrome_from=ghcr.io/appjail-makejails/navidrome
 ARG navidrome_tag=latest
 
+OPTION container=boot
 OPTION overwrite=force
 OPTION from=${navidrome_from}:${navidrome_tag}
