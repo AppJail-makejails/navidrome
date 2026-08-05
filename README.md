@@ -83,7 +83,7 @@ volumes:
 | Name | Owner | Group | Perm | Type | Mountpoint |
 | --- | --- | --- | --- | --- | --- |
 | appjail-263aca83a3-data | `${PUID}` | `${PGID}` | - | - | /data |
-| appjail-3e431e873f-music | `${PUID}` | `${PGID}` | - | - | /music |
+| appjail-3e431e873f-music | - | - | - | - | /music |
 
 ## OCI Configuration
 
