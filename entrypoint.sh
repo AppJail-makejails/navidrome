@@ -6,7 +6,7 @@ set -e
 
 create_user
 
-chown -R noroot:noroot /data
+change_owner /data
 
 if [ ! -f "${ND_CONFIGFILE}" ]; then
     echo -n > "${ND_CONFIGFILE}"
