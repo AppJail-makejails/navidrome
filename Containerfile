@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.title="Navidrome" \
 RUN set -xe; \
     \
     pkg update; \
-    pkg install -U navidrome ffmpeg-nox11; \
+    pkg install navidrome ffmpeg-nox11; \
     \
     if [ -z "${NO_PKGCLEAN}" ]; then \
         pkg clean -a; \
